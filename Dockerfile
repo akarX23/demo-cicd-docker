@@ -1,11 +1,18 @@
 FROM node:16-alpine3.11
 
-WORKDIR /demo-deploy
+# create & set working directory
+RUN mkdir -p /usr/src
 
-ENV PORT 80
+WORKDIR /usr/src
 
-COPY . /demo-deploy
+# copy source files
+COPY . /usr/src
 
+# install dependencies
 RUN npm install
 
-CMD ["npm", "run", "dev"]
+# build app
+RUN npm run build
+
+EXPOSE 3000
+CMD ["npm","run","start"]
